@@ -30,9 +30,7 @@ public class KeyEvents extends JFrame implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println("Taste: " + e.getKeyChar() + ", Code: " + e.getKeyCode());
-        System.out.println("Tastenposition: " + e.getKeyLocation());
-        System.out.println("---");
+        System.out.println("Code: " + e.getKeyCode());
     }
 
     @Override
