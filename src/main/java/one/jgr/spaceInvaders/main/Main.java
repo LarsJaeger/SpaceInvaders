@@ -1,16 +1,21 @@
 package one.jgr.spaceInvaders.main;
 
 import one.jgr.engine.Display;
+import one.jgr.game.Game;
 import one.jgr.game.Player;
 import one.jgr.listeners.KeyEvents;
 
 public class Main {
-    public static Display display;
-    public void main(String... args) {
+    private static Game game;
+    public static void main(String... args) {
         // implement listeners
         new KeyEvents();
-        Player p = new Player(10 , 0);
-        display = new Display(10, 10);
-        display.update();
+        game = new Game(new Display(70, 70));
+        game.start();
+
+
+    }
+    public static Game getGame() {
+        return game;
     }
 }

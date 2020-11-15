@@ -1,5 +1,7 @@
 package one.jgr.engine;
 
+import one.jgr.spaceInvaders.main.Main;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -13,11 +15,12 @@ public class Display {
 
     }
     public void update() {
-        for (int i = 0; i < 50; ++i) System.out.println();
+        for (int i = 0; i < 100; ++i) System.out.println();
+        System.out.println("Cycle: " + Main.getGame().getCycle());
         String[][] image = render();
         for (int y = image.length - 1; y >= 0; y--) {
             String print = "";
-            for(int x = 0; x < image[y].length; x++) {
+            for(int x = 0; x < image[0].length; x++) {
                 if (image[x][y] != null) {
                     print += image[x][y];
                 } else {

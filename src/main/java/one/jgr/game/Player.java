@@ -8,26 +8,26 @@ import one.jgr.spaceInvaders.main.Main;
 public class Player {
     private int lifes;
     private int position;
-    private DisplayObject player;
+    private DisplayObject displayPlayer;
     // constructors
     public Player() {
         lifes = 10;
-        position = 0;
-        player = new DisplayObject(DisplayObjectType.PLAYER);
+        position = 1;
+        displayPlayer = new DisplayObject(DisplayObjectType.PLAYER);
 
     }
     public Player(int lifes, int position) {
         this.lifes = lifes;
         this.position = position;
-        player = new DisplayObject(DisplayObjectType.PLAYER);
-        player.setCoordinates( 0,this.position);
+        displayPlayer = new DisplayObject(DisplayObjectType.PLAYER);
+        displayPlayer.setCoordinates( 0,this.position);
     }
 
     // player actions
     public void move(int i) {
-        if(position + i > 0 && position + i < Main.display.getWidth()) {
+        if(position + i > 0 && position + i < Main.getGame().getDisplay().getWidth() - 1) {
             position += i;
-            player.setX(position);
+            displayPlayer.setX(position);
         }
     }
 
@@ -47,12 +47,16 @@ public class Player {
     public void shoot() {
         //TODO
     }
+    // passive actions
+    public void hit(int damage) {
+        lifes -= damage;
+    }
 
     // display actions
-    public void showPlayer() {
-
+    public void show() {
+        displayPlayer.show();
     }
-    public void hidePlayer() {
-
+    public void hide() {
+        displayPlayer.hide();
     }
 }

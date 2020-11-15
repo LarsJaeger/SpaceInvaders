@@ -36,13 +36,9 @@ public class DisplayObject {
 
     private void updateExtremes() {
         centerX = lengthX / 2;
-        System.out.println(centerX);
         centerY = lengthY / 2;
-        System.out.println(centerY);
         lowestX = x - centerX;
-        System.out.println(lowestX);
         lowestY = y - centerY;
-        System.out.println(lowestY);
 
         // highestX
         if ((lengthX / 2) % 2 == 0) {
@@ -67,10 +63,12 @@ public class DisplayObject {
 
     public void setX(int x) {
         this.x = x;
+        updateExtremes();
     }
 
     public void setY(int y) {
         this.y = y;
+        updateExtremes();
     }
 
     public void hide() {
