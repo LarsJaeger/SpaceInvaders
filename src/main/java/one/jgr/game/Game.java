@@ -5,6 +5,7 @@ import one.jgr.listeners.KeyEvents;
 import one.jgr.spaceInvaders.main.Main;
 
 public class Game {
+    private Boolean stopped = false;
     private Display display;
     private Player p1;
     private int cycle = 0;
@@ -14,11 +15,25 @@ public class Game {
     public Game(Display display) {
         this.display = display;
         p1 = new Player(10 , 0);
+        for(int i = display.getHeight(); i > 30; i--) {
+            if(i % 3 == 0) {
+                for (int h = 2; h < display.getWidth() - 2; h++) {
+                    if (h % 10 == 0) {
+                        if (i % 5 == 0) {
+                            new Enemy(h, i, EnemyType.XWING);
+                        } else {
+                            new Enemy(h, i, EnemyType.CRUISER);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public void start() {
+        stopped = false;
         display.update();
-        while(true) {
+        while(!stopped) {
             try {
                 Thread.sleep(dt);
             } catch (InterruptedException e) {
@@ -27,6 +42,10 @@ public class Game {
             run();
             display.update();
         }
+    }
+
+    public void stop() {
+        stopped = true;
     }
 
     public Display getDisplay() {
@@ -40,7 +59,15 @@ public class Game {
 
     private void run(){
         cycle++;
+        Enemy.update();
+        Shot.update();
         runInteractions();
+        cleanup();
+    }
+    public void cleanup() {
+        Shot.cleanup();
+        Enemy.cleanup();
+        Player.cleanup();
     }
 
     private void runInteractions() {
@@ -48,6 +75,8 @@ public class Game {
             p1.moveLeft();
         } else if(!KeyEvents.getLeftWas() && KeyEvents.getRightWas()) {
             p1.moveRight();
+        } else if(KeyEvents.getUpWas()) {
+            p1.shoot();
         }
         KeyEvents.resetWasKeys();
     }

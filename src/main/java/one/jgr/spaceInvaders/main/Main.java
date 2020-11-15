@@ -10,7 +10,7 @@ public class Main {
     public static void main(String... args) {
         // implement listeners
         new KeyEvents();
-        game = new Game(new Display(70, 70));
+        game = new Game(new Display(60, 60));
         game.start();
 
 

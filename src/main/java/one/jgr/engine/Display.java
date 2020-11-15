@@ -15,18 +15,19 @@ public class Display {
 
     }
     public void update() {
-        for (int i = 0; i < 100; ++i) System.out.println();
+        //for (int i = 0; i < 100; ++i) System.out.println();
         System.out.println("Cycle: " + Main.getGame().getCycle());
         String[][] image = render();
         for (int y = image.length - 1; y >= 0; y--) {
-            String print = "";
+            String print = "X";
             for(int x = 0; x < image[0].length; x++) {
                 if (image[x][y] != null) {
                     print += image[x][y];
                 } else {
-                    print += "O";
+                    print += " ";
                 }
             }
+            print += "X";
             System.out.println(print);
         }
     }

@@ -2,10 +2,10 @@ package one.jgr.engine;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class DisplayObject {
-    private static ArrayList<DisplayObject> objects = new ArrayList<>();
-    private DisplayObjectType type;
+    public static ArrayList<DisplayObject> objects = new ArrayList<>();
     private boolean shown = true;
     private int x;
     private int y;
@@ -18,11 +18,15 @@ public class DisplayObject {
     private int highestX;
     private int highestY;
     private String[][] image;
+    private Object object;
 
-    public DisplayObject(DisplayObjectType type) {
+    public static ArrayList<DisplayObject> getAll() {
+        return objects;
+    }
+
+    public DisplayObject(String[] imageLines, Object object) {
         objects.add(this);
-        this.type = type;
-        String[] imageLines = this.type.getImageLines();
+        this.object = object;
         //generate image map
         image = new String[imageLines[0].length()][imageLines.length];
         for (int j = 0; j < imageLines.length; j++) {
@@ -42,16 +46,16 @@ public class DisplayObject {
 
         // highestX
         if ((lengthX / 2) % 2 == 0) {
-            highestX = getCenterX();
+            highestX = x + getCenterX();
         } else {
-            highestX = getCenterX() + 1;
+            highestX = x + getCenterX() + 1;
         }
 
         // highestY
         if ((lengthY / 2) % 2 == 0) {
-            highestY = centerY;
+            highestY = y + centerY;
         } else {
-            highestY = centerY + 1;
+            highestY = y + centerY + 1;
         }
     }
 
@@ -123,8 +127,8 @@ public class DisplayObject {
         return lengthY;
     }
 
-    public static ArrayList<DisplayObject> getAll() {
-        return objects;
+    public Object getObject() {
+        return object;
     }
 
 }
