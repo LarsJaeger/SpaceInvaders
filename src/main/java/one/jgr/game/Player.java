@@ -30,7 +30,6 @@ public class Player {
             p.hide();
             players.remove(p);
             DisplayObject.objects.remove(p.displayPlayer);
-            p.displayPlayer = null;
         }
         playersToRemove.clear();
     }

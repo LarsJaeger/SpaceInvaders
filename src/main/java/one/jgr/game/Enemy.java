@@ -40,7 +40,6 @@ public class Enemy {
             e.hide();
             enemies.remove(e);
             DisplayObject.objects.remove(e.displayEnemy);
-            e.displayEnemy = null;
         }
         enemiesToRemove.clear();
     }

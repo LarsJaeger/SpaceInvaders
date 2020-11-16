@@ -34,7 +34,6 @@ public class Shot {
             s.hide();
             shots.remove(s);
             DisplayObject.objects.remove(s.displayShot);
-            s.displayShot = null;
         }
         shotsToRemove.clear();
     }
