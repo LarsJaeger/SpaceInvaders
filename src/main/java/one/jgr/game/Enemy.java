@@ -20,17 +20,24 @@ public class Enemy {
 
     public static void update() {
         for(Enemy e : enemies) {
-            if(Main.getGame().getCycle() % 4 == 0) {
+            if(Main.getGame().getCycle() % 3 == 0) {
+                if(e.getEnemyType().equals(EnemyType.CRUISER)) {
+                    if(Game.getRandomBoolean() && Game.getRandomBoolean() && Game.getRandomBoolean()) {
+                        e.shoot(ShotType.FLAK);
+                    }
+                } else {
+                    if(Game.getRandomBoolean() && Game.getRandomBoolean() && Game.getRandomBoolean() && Game.getRandomBoolean() && Game.getRandomBoolean()) {
+                        e.shoot(ShotType.STANDARD);
+                    }
+                }
+            }
+            if(Main.getGame().getCycle() % 8 == 0) {
                 e.moveRight();
-            } else if(Main.getGame().getCycle() % 4 == 2){
+            } else if(Main.getGame().getCycle() % 8 == 2){
                 e.moveLeft();
             }
-            if(Main.getGame().getCycle() % 20 == 0) {
+            if(Main.getGame().getCycle() % 10 == 0) {
                 e.moveDown();
-            } else if(Main.getGame().getCycle() % 20 == 7) {
-                e.moveDown();
-            } else if(Main.getGame().getCycle() % 20 == 15) {
-                e.moveUp();
             }
         }
     }
@@ -39,6 +46,7 @@ public class Enemy {
         for(Enemy e: enemiesToRemove) {
             e.hide();
             enemies.remove(e);
+            Game.plsDoNotDelete.add(e);
             DisplayObject.objects.remove(e.displayEnemy);
         }
         enemiesToRemove.clear();
@@ -62,6 +70,10 @@ public class Enemy {
         displayEnemy.setCoordinates(posX, posY);
     }
 
+    public EnemyType getEnemyType() {
+        return type;
+    }
+
     // active actions
     public void moveLeft() {
         posX --;
@@ -80,8 +92,8 @@ public class Enemy {
         updateDisplayEnemy();
     }
 
-    public void shoot() {
-        //TODO
+    public void shoot(ShotType type) {
+        new Shot(posX, posY -1, type, Shot.ShotDirection.DOWN);
     }
 
     public void hit(int damage) {

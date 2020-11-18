@@ -15,19 +15,22 @@ public class Display {
 
     }
     public void update() {
-        //for (int i = 0; i < 100; ++i) System.out.println();
+        for (int i = 0; i < 100; ++i) System.out.println();
         System.out.println("Cycle: " + Main.getGame().getCycle());
         String[][] image = render();
-        for (int y = image.length - 1; y >= 0; y--) {
-            String print = "X";
-            for(int x = 0; x < image[0].length; x++) {
+        for (int y = height - 1; y >= 0; y--) {
+            String print = "|";
+            for(int x = 0; x < width; x++) {
                 if (image[x][y] != null) {
                     print += image[x][y];
                 } else {
                     print += " ";
                 }
             }
-            print += "X";
+            print += "|";
+            if(y == 10) {
+                print += "Lifes: " + Main.getGame().getP1().getLifes();
+            }
             System.out.println(print);
         }
     }
@@ -37,7 +40,7 @@ public class Display {
             if(o.isShown()) {
                 for (int imageX = 0; imageX < o.getLengthX(); imageX++) {
                     for (int imageY = 0; imageY < o.getLengthY(); imageY++) {
-                        if (o.getLowestX() + imageX >= 0 && o.getLowestY() + imageY >= 0 && o.getLowestX() + imageX < out[0].length && o.getLowestY() + imageY < out.length) {
+                        if (o.getLowestX() + imageX >= 0 && o.getLowestY() + imageY >= 0 && o.getLowestX() + imageX < width && o.getLowestY() + imageY < height) {
                             out[o.getLowestX() + imageX][o.getLowestY() + imageY] = o.getImage()[imageX][imageY];
                         }
                     }

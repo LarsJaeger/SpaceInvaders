@@ -33,6 +33,7 @@ public class Shot {
         for(Shot s: shotsToRemove) {
             s.hide();
             shots.remove(s);
+            Game.plsDoNotDelete.add(s);
             DisplayObject.objects.remove(s.displayShot);
         }
         shotsToRemove.clear();
@@ -71,8 +72,10 @@ public class Shot {
                 if (o.getLowestX() <= posX && o.getHighestX() >= posX && o.getLowestY() <= posY && o.getHighestY() >= posY) {
                     if (o.getObject() instanceof Player) {
                         ((Player) o.getObject()).hit(type.getDamage());
-                    } else if (o.getObject() instanceof Enemy) {
-                        ((Enemy) o.getObject()).hit(type.getDamage());
+                    } else if (o.getObject() instanceof Enemy ) {
+                        if(!dir.equals(ShotDirection.DOWN)) {
+                            ((Enemy) o.getObject()).hit(type.getDamage());
+                        }
                     } //TODO: obstacles
                     shotsToRemove.add(this);
                 }

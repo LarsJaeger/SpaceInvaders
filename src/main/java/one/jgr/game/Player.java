@@ -29,6 +29,7 @@ public class Player {
         for (Player p : playersToRemove) {
             p.hide();
             players.remove(p);
+            Game.plsDoNotDelete.add(p);
             DisplayObject.objects.remove(p.displayPlayer);
         }
         playersToRemove.clear();
@@ -50,7 +51,7 @@ public class Player {
         this.lifes = lifes;
         this.position = position;
         displayPlayer = new DisplayObject(image, this);
-        displayPlayer.setCoordinates(0, this.position);
+        displayPlayer.setCoordinates(this.position, 0);
     }
 
     // player actions
@@ -102,5 +103,9 @@ public class Player {
 
     public String[] getImage() {
         return image;
+    }
+
+    public int getLifes() {
+        return lifes;
     }
 }

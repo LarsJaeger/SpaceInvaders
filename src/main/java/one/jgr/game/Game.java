@@ -1,10 +1,16 @@
 package one.jgr.game;
 
 import one.jgr.engine.Display;
+import one.jgr.engine.DisplayObject;
 import one.jgr.listeners.KeyEvents;
 import one.jgr.spaceInvaders.main.Main;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 public class Game {
+    public static ArrayList<Object> plsDoNotDelete = new ArrayList<>();
+    private static Random random = new Random();
     private Boolean stopped = false;
     private Display display;
     private Player p1;
@@ -14,26 +20,13 @@ public class Game {
 
     public Game(Display display) {
         this.display = display;
-        p1 = new Player(10 , 0);
-        for(int i = display.getHeight(); i > 30; i--) {
-            if(i % 3 == 0) {
-                for (int h = 2; h < display.getWidth() - 2; h++) {
-                    if (h % 10 == 0) {
-                        if (i % 5 == 0) {
-                            new Enemy(h, i, EnemyType.XWING);
-                        } else {
-                            new Enemy(h, i, EnemyType.CRUISER);
-                        }
-                    }
-                }
-            }
-        }
+        p1 = new Player(10, 10);
     }
 
     public void start() {
         stopped = false;
         display.update();
-        while(!stopped) {
+        while (!stopped) {
             try {
                 Thread.sleep(dt);
             } catch (InterruptedException e) {
@@ -56,28 +49,66 @@ public class Game {
         return cycle;
     }
 
+    public Player getP1() {
+        return p1;
+    }
 
-    private void run(){
+
+    private void run() {
         cycle++;
         Enemy.update();
+        checkForEnd();
         Shot.update();
         runInteractions();
         cleanup();
+        spawnEnemies();
     }
+
     public void cleanup() {
         Shot.cleanup();
         Enemy.cleanup();
         Player.cleanup();
     }
 
+    private void checkForEnd() {
+        for (DisplayObject o : DisplayObject.getAll()) {
+            if (o.getObject() instanceof Enemy) {
+                if (o.getLowestY() == 0) {
+                    p1.hit(5);
+                }
+            }
+        }
+    }
+
     private void runInteractions() {
-        if(KeyEvents.getLeftWas() && !KeyEvents.getRightWas()) {
+        if (KeyEvents.getLeftWas() && !KeyEvents.getRightWas()) {
             p1.moveLeft();
-        } else if(!KeyEvents.getLeftWas() && KeyEvents.getRightWas()) {
+        } else if (!KeyEvents.getLeftWas() && KeyEvents.getRightWas()) {
             p1.moveRight();
-        } else if(KeyEvents.getUpWas()) {
+        } else if (KeyEvents.getUpWas()) {
             p1.shoot();
         }
         KeyEvents.resetWasKeys();
     }
+
+    public void spawnEnemies() {
+        if(cycle % 50 == 0 || cycle == 0) {
+            for(int x = 5; x < display.getWidth() - 5; x++) {
+                if(x % 25 == 6) {
+                    new Enemy(x, display.getHeight(), EnemyType.XWING);
+                }
+            }
+        }
+        if(cycle % 70 == 0 || cycle == 15) {
+            for(int x = 5; x < display.getWidth() - 5; x++) {
+                if(x % 17 == 6) {
+                    new Enemy(x, display.getHeight(), EnemyType.CRUISER);
+                }
+            }
+        }
+    }
+    public static Boolean getRandomBoolean() {
+        return random.nextBoolean();
+    }
+
 }

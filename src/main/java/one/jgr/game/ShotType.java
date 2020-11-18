@@ -1,8 +1,8 @@
 package one.jgr.game;
 
 public enum ShotType {
-    STANDARD(1, "*"),
-    FLAK(5, "I");
+    STANDARD(2, "*"),
+    FLAK(1, "I");
 
     private String[] img;
     private int damage;

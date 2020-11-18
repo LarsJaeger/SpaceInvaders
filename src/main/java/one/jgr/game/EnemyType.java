@@ -1,8 +1,8 @@
 package one.jgr.game;
 
 public enum EnemyType {
-    XWING(1, "\\V/"),
-    CRUISER(3, "  \\=/  ", "<==H==>");
+    XWING(5, "\\V/"),
+    CRUISER(2, "  \\=/  ", "<==H==>");
 
     private String[] img;
     private int lifes;
